@@ -1,2 +1,7 @@
 api/auth.txt
-plugin/target
+plugin/target 
+bot/token
+main.spec
+__pycache__
+build
+dist
