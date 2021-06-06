@@ -1,25 +1,33 @@
 import os
 
-host = ""
+host = "C:\Windows\System32\drivers\etc\hosts"
 
-if os.name == "nt":
-	host = "C:\Windows\System32\drivers\etc\hosts"
-	import ctypes
-	try:
-		if not ctypes.windll.shell32.IsUserAnAdmin():
-			print("Start me as administrator!")
-			exit()
-	except:
-		print("Start me as administrator!")
-		exit()
-elif os.name == "posix":
-	host = "\\etc\\hosts"
-	if not os.getuid() == 0:
-		print("Use `sudo` to start me.")
-		exit()
+service = "None"
 
 from appJar import gui
 
+app = gui()
+
+# Check for administrator
+if os.name == "nt":
+	import ctypes
+	try:
+		if not ctypes.windll.shell32.IsUserAnAdmin():
+			app.infoBox("Noo..", "Start me as administrator!")
+			exit()
+
+	except:
+		app.infoBox("Noo..", "Start me as administrator!")
+		exit()
+	
+elif os.name == "posix":
+	host = "\\etc\\hosts"
+
+	if not os.getuid() == 0:
+		app.infoBox("Noo..", "Use sudo to start me.")
+		exit()
+
+#Define all needed functions
 def line_prepender(filename, line):
     with open(filename, 'r+') as f:
         content = f.read()
@@ -42,14 +50,6 @@ def remove(file, word):
         os.rename(dummy_file, file)
     else:
         os.remove(dummy_file)
-
-
-app = gui()
-service = "None"
-
-app.setBg("#2A2D32")
-app.setFg("#FFFFFF")
-app.setResizable(canResize=False)
 
 def handle(button):
 
@@ -77,6 +77,10 @@ def handle(button):
 		app.infoBox("Yay!", "Uninstalled all Services!")
 	pass
 
+app.setBg("#2A2D32")
+app.setFg("#FFFFFF")
+app.setResizable(canResize=False)
+
 app.addLabel("title", "Cape Service Installer")
 
 app.addLabel("actions", "Actions")
@@ -86,4 +90,5 @@ app.addLabel("services", "Services")
 app.addButton("AnarchyCapes", handle)
 app.addButton("CloaksPlus", handle)
 app.addLabel("selected", "Current: " + service)
+
 app.go()
