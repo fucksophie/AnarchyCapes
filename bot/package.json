@@ -1,0 +1,21 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/mcping-js": "^1.5.0"
+  },
+  "dependencies": {
+    "@types/request": "^2.48.5",
+    "mcping-js": "^1.5.0",
+    "request": "^2.88.2"
+  }
+}
