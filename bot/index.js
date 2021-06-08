@@ -7,7 +7,7 @@ const prefix = "!"
 
 const bot = new Discord.Client({
 	disableMentions: "everyone"
-})
+})  
 
 bot.on("ready", async () => {
 	console.log("bot on")
