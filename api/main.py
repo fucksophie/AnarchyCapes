@@ -21,7 +21,7 @@ if not os.path.exists(capeDir):
     os.makedirs(capeDir)
 
 @app.post('/v1/update')
-async def test(request):
+async def update(request):
     if "auth" in request.json:
         if request.json["auth"] == key:
             try:

@@ -8,3 +8,6 @@ commands:
   setcape:
     description: Set your cape.
     usage: setcape <img link>
+  copycape:
+    description: Copy somebody's cape.
+    usage: copycape <username>
