@@ -1,21 +1,23 @@
 {
-  "name": "bot",
+  "name": "anarchycapes",
   "version": "1.0.0",
-  "description": "",
+  "description": "AnarchyCapes discord bot.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "anarchycapes",
+    "capes",
+    "minecraft",
+    "discord",
+    "js",
+    "node"
+  ],
+  "author": "yourfriend",
+  "license": "MIT",
   "type": "module",
-  "devDependencies": {
-    "@types/mcping-js": "^1.5.0"
-  },
   "dependencies": {
     "@types/request": "^2.48.5",
-    "mcping-js": "^1.5.0",
-    "request": "^2.88.2"
+    "discord.js": "^12.5.3",
+    "request": "^2.88.2",
+    "url-exist": "^3.0.0"
   }
 }
