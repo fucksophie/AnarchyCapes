@@ -28,22 +28,25 @@ async def update(request):
                 response = requests.get(request.json["image"])
         
                 urllib.request.urlretrieve(request.json["image"], "capes/" + request.json["username"]+".png")
-        
+                print(f"{request.json['username']} - {Fore.BLUE}Cape sucessfully set.{Style.RESET_ALL}")
                 return json({
                     "message": "",
                     "error": False
                 })
             except requests.ConnectionError:
+                print(f"{request.json['username']} - {Fore.BLUE}URL didn't exist.{Style.RESET_ALL}")
                 return json({
                     "message": "URL does not exist.",
                     "error": True
                 })
         else:
+            print(f"{request.json['username']} - {Fore.BLUE}Attempted fraudulent connection.{Style.RESET_ALL}")
             return json({
                 "message": "Server authenication failed.",
                 "error": True
             })
     else:
+        print(f"{request.json['username']} - {Fore.BLUE}Attempted fraudulent connection.{Style.RESET_ALL}")
         return json({
             "message": "Missing authenication.",
             "error": True
