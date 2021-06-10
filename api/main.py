@@ -9,7 +9,6 @@ if not os.path.exists("auth.txt"):
     exit()
 
 key = open("auth.txt").read()
-capeDir = str(Path.home()) + "/website/capes/"
 
 app = Sanic("AnarchyCapes")
 
@@ -17,8 +16,10 @@ opener = urllib.request.build_opener()
 opener.addheaders = [('User-agent', 'Mozilla/5.0')]
 urllib.request.install_opener(opener)
 
-if not os.path.exists(capeDir):
-    os.makedirs(capeDir)
+if not os.path.exists("capes"):
+    os.makedirs("capes")
+
+app.static("/capes", "./capes")
 
 @app.post('/v1/update')
 async def update(request):
@@ -27,13 +28,13 @@ async def update(request):
             try:
                 response = requests.get(request.json["image"])
         
-                urllib.request.urlretrieve(request.json["image"], capeDir + request.json["username"]+".png")
+                urllib.request.urlretrieve(request.json["image"], "capes/" + request.json["username"]+".png")
         
                 return json({
                     "message": "",
                     "error": False
                 })
-            except requests.ConnectionError as exception:
+            except requests.ConnectionError:
                 return json({
                     "message": "URL does not exist.",
                     "error": True
