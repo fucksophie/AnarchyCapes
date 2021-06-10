@@ -19,16 +19,6 @@ urllib.request.install_opener(opener)
 if not os.path.exists("capes"):
     os.makedirs("capes")
 
-def optifine_exists(path):
-    try:
-        with requests.get(f"http://107.182.233.85/capes/{path}", stream=True) as response:
-            try:
-                response.raise_for_status()
-                return True
-            except requests.exceptions.HTTPError:
-                return False
-    except requests.exceptions.ConnectionError:
-        return False
 
 @app.post('/v1/update')
 async def update(request):
@@ -68,12 +58,9 @@ async def capes(request, path):
         
         print(name + " - AnarchyCapes cape exists, routing.")
         return await file("capes/" + path)
-    elif optifine_exists(path):
-        print(name + " - Optifine cape exists, routing.")
-        return redirect(f"http://107.182.233.85/capes/{path}")
     else:
-        print(name + " - Could not find cape.")
-        return text("404", status=404)
+        print(name + " -  AnarchyCapes cape missing, routing optifine cape.")
+        return redirect(f"http://107.182.233.85/capes/{path}")
         
 if __name__ == '__main__':
 	app.run(port=20012, host="0.0.0.0", access_log=False)
