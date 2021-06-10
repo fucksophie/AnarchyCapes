@@ -1,6 +1,6 @@
 from sanic import Sanic
-from sanic.response import json, file, text, redirect
-from pathlib import Path
+from sanic.response import json, file, redirect
+from colorama import Fore, Style
 
 import urllib.request, requests, os.path
 
@@ -53,13 +53,13 @@ async def update(request):
 async def capes(request, path):
     name = path[:-4]
 
-    print(name + " - Routing cape")
-    if os.path.exists("capes/" + path):
+    print(f"{Fore.RED}{name} - {Fore.BLUE}Routing cape.{Style.RESET_ALL}")
+    if os.path.exists(f"capes/{path}"):
         
-        print(name + " - AnarchyCapes cape exists, routing.")
-        return await file("capes/" + path)
+        print(f"{Fore.RED}{name} - {Fore.YELLOW}AC cape exists.{Style.RESET_ALL}")
+        return await file(f"capes/{path}")
     else:
-        print(name + " -  AnarchyCapes cape missing, routing optifine cape.")
+        print(f"{Fore.RED}{name} - {Fore.YELLOW}Sending optifine cape.{Style.RESET_ALL}")
         return redirect(f"http://107.182.233.85/capes/{path}")
         
 if __name__ == '__main__':
