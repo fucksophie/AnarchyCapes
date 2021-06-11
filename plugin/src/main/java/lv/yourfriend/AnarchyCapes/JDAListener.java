@@ -26,12 +26,13 @@ public class JDAListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@Nonnull MessageReceivedEvent event) {
         List<String> args = new LinkedList<String>(Arrays.asList(event.getMessage().getContentRaw().split(" ")));
+
         String command = args.get(0);
         MessageChannel channel = event.getChannel();
         args.remove(0);
 
-        System.out.println(command);
-        if(command.equals("#register")) {
+
+        if(command.equals("!register")) {
             String image = String.join(" ", args);
 
             if(!image.isEmpty()) {
@@ -39,7 +40,7 @@ public class JDAListener extends ListenerAdapter {
                     if(util.isImg(image)) {
                         OfflinePlayer player = Bukkit.getOfflinePlayer(DiscordSRV.getPlugin().getAccountLinkManager().getUuid(event.getMessage().getMember().getId()));
 
-                        channel.sendMessage("Attempting to set cape for" + player.getName() + "!").queue();
+                        channel.sendMessage("Attempting to set cape for " + player.getName() + "!").queue();
 
                         try {
                             util.APIResponse lol = util.post("http://localhost:20012/v1/update", "{\"username\": \"" + player.getName() + "\", \"image\":\"" + image + "\",\"auth\":\""+ AnarchyCapes.key + "\"}");
@@ -61,6 +62,16 @@ public class JDAListener extends ListenerAdapter {
                 }
             } else {
                 channel.sendMessage("Image URL is empty!").queue();
+            }
+        } else if(command.equals("!cape")) {
+            if(args.size() > 0) {
+                if (util.isImg("http://localhost:20012/capes/" + args.get(0) + ".png")) {
+                    channel.sendMessage("http://54.37.139.51/capes/" + args.get(0) + ".png").queue();
+                } else {
+                    channel.sendMessage(args.get(0) + " doesn't exist!").queue();
+                }
+            } else {
+                channel.sendMessage("Input a username!").queue();
             }
         }
     }

@@ -53,6 +53,7 @@ async def update(request):
         })
 
 @app.get("/capes/<path:path>")
+@app.head("/capes/<path:path>")
 async def capes(request, path):
     name = path[:-4]
 

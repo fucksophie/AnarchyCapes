@@ -38,7 +38,6 @@ public class util {
 
             isAlive = responseCode == HttpURLConnection.HTTP_OK;
         } catch (IOException e) {
-            e.printStackTrace();
             return false;
         }
 
