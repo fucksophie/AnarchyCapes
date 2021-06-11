@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public class JDAListener extends ListenerAdapter {
     private final Plugin plugin;
@@ -66,7 +67,7 @@ public class JDAListener extends ListenerAdapter {
         } else if(command.equals("!cape")) {
             if(args.size() > 0) {
                 if (util.isImg("http://localhost:20012/capes/" + args.get(0) + ".png")) {
-                    channel.sendMessage("http://54.37.139.51/capes/" + args.get(0) + ".png").queue();
+                    channel.sendMessage("http://54.37.139.51/capes/" + args.get(0) + ".png?v=" + UUID.randomUUID().toString()).queue();
                 } else {
                     channel.sendMessage(args.get(0) + " doesn't exist!").queue();
                 }
