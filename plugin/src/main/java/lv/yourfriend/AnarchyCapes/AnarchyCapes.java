@@ -1,5 +1,6 @@
 package lv.yourfriend.AnarchyCapes;
 
+import github.scarsz.discordsrv.DiscordSRV;
 import lv.yourfriend.AnarchyCapes.commands.SetCape;
 
 import java.io.File;
@@ -10,12 +11,15 @@ import java.nio.file.Files;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
+import github.scarsz.discordsrv.DiscordSRV.*;
 
 public class AnarchyCapes extends JavaPlugin {
     public static String key = "";
-    
+    private DiscordSRVListener discordsrvListener = new DiscordSRVListener(this);
+
     @Override
     public void onEnable() {
+        DiscordSRV.api.subscribe(discordsrvListener);
         try {
             File authFile = new File("AnarchyCapes_auth.txt");
             authFile.createNewFile();
@@ -34,6 +38,10 @@ public class AnarchyCapes extends JavaPlugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public void onDisable() {
+        DiscordSRV.api.unsubscribe(discordsrvListener);
     }
 }

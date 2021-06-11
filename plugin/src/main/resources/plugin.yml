@@ -3,7 +3,7 @@ main: lv.yourfriend.AnarchyCapes.AnarchyCapes
 version: 1.0
 api-version: 1.16
 auth: yourfriend
-
+depend: [DiscordSRV]
 commands:
   setcape:
     description: Set your cape.
