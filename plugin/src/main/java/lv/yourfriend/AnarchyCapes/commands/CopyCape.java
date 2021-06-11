@@ -20,8 +20,8 @@ public class CopyCape implements CommandExecutor {
 
         if (sender instanceof Player) {
             try {
-                if(doesExist("http://localhost/capes/" + url + ".png")) {
-                    util.APIResponse lol = util.post("http://localhost:20012/v1/update", "{\"username\": \"" + sender.getName() + "\", \"image\":\"http://localhost/capes/" + url + ".png\",\"auth\":\""+ AnarchyCapes.key + "\"}");
+                if(doesExist("http://localhost:20012/capes/" + url + ".png")) {
+                    util.APIResponse lol = util.post("http://localhost:20012/v1/update", "{\"username\": \"" + sender.getName() + "\", \"image\":\"http://localhost:20012/capes/" + url + ".png\",\"auth\":\""+ AnarchyCapes.key + "\"}");
                     if(lol.error) {
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8&l[&7&lAnarchyCapes&8&l] &r&cExperienced error: " + lol.message));
                     } else {
