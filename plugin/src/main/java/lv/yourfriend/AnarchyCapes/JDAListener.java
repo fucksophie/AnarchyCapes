@@ -1,16 +1,16 @@
 package lv.yourfriend.AnarchyCapes;
 
 import github.scarsz.discordsrv.DiscordSRV;
+import github.scarsz.discordsrv.dependencies.jda.api.EmbedBuilder;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.MessageChannel;
-import github.scarsz.discordsrv.dependencies.jda.api.events.guild.GuildUnavailableEvent;
 import github.scarsz.discordsrv.dependencies.jda.api.events.message.MessageReceivedEvent;
 import github.scarsz.discordsrv.dependencies.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
+import java.awt.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -41,38 +41,63 @@ public class JDAListener extends ListenerAdapter {
                     if(util.isImg(image)) {
                         OfflinePlayer player = Bukkit.getOfflinePlayer(DiscordSRV.getPlugin().getAccountLinkManager().getUuid(event.getMessage().getMember().getId()));
 
-                        channel.sendMessage("Attempting to set cape for " + player.getName() + "!").queue();
-
                         try {
                             util.APIResponse lol = util.post("http://localhost:20012/v1/update", "{\"username\": \"" + player.getName() + "\", \"image\":\"" + image + "\",\"auth\":\""+ AnarchyCapes.key + "\"}");
 
                             if(lol.error) {
-                                channel.sendMessage("Experienced error: " + lol.message).queue();
+                                channel.sendMessage(new EmbedBuilder()
+                                        .setColor(Color.red)
+                                        .setTitle("Error")
+                                        .setDescription("Experienced error: " + lol.message).build()).queue();
                             } else {
-                                channel.sendMessage("Set " + player.getName() + "'s cape to <" + image + ">!").queue();
+                                channel.sendMessage(new EmbedBuilder()
+                                        .setColor(Color.green)
+                                        .setTitle("Success!")
+                                        .setDescription("Set " + player.getName() + "'s cape!")
+                                        .setImage(image).build()).queue();
                             }
                         } catch (IOException e) {
-                            channel.sendMessage("Could not send API request. API has crashed!").queue();
-                            e.printStackTrace();
+                            channel.sendMessage(new EmbedBuilder()
+                                    .setColor(Color.red)
+                                    .setTitle("Error")
+                                    .setDescription("Could not send API request. API has crashed!").build()).queue();
                         }
                     } else {
-                        channel.sendMessage("<"+image+"> is not a valid URL!").queue();
+                        channel.sendMessage(new EmbedBuilder()
+                                .setColor(Color.red)
+                                .setTitle("Error")
+                                .setDescription("<"+image+"> is not a valid URL!").build()).queue();
                     }
                 } else {
-                    channel.sendMessage("You are not linked!").queue();
+                    channel.sendMessage(new EmbedBuilder()
+                            .setColor(Color.red)
+                            .setTitle("Error")
+                            .setDescription("You are not linked!").build()).queue();
                 }
             } else {
-                channel.sendMessage("Image URL is empty!").queue();
+                channel.sendMessage(new EmbedBuilder()
+                        .setColor(Color.red)
+                        .setTitle("Error")
+                        .setDescription("Image URL is empty!").build()).queue();
             }
         } else if(command.equals("!cape")) {
             if(args.size() > 0) {
                 if (util.isImg("http://localhost:20012/capes/" + args.get(0) + ".png")) {
-                    channel.sendMessage("http://54.37.139.51/capes/" + args.get(0) + ".png?v=" + UUID.randomUUID().toString()).queue();
+                    channel.sendMessage(new EmbedBuilder()
+                            .setColor(Color.green)
+                            .setTitle("Success!")
+                            .setImage("http://54.37.139.51/capes/" + args.get(0) + ".png?v=" + UUID.randomUUID().toString()).build()).queue();
                 } else {
-                    channel.sendMessage(args.get(0) + " doesn't exist!").queue();
+                    channel.sendMessage(new EmbedBuilder()
+                            .setColor(Color.red)
+                            .setTitle("Error")
+                            .setDescription(args.get(0) + " doesn't exist!").build()).queue();
                 }
             } else {
-                channel.sendMessage("Input a username!").queue();
+                channel.sendMessage(new EmbedBuilder()
+                        .setColor(Color.red)
+                        .setTitle("Error")
+                        .setDescription("Input a username!").build()).queue();
             }
         }
     }

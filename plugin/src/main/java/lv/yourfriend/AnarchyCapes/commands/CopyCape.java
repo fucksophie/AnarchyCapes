@@ -3,6 +3,7 @@ package lv.yourfriend.AnarchyCapes.commands;
 
 import lv.yourfriend.AnarchyCapes.AnarchyCapes;
 import lv.yourfriend.AnarchyCapes.util;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,19 +19,16 @@ public class CopyCape implements CommandExecutor {
         String url = String.join(" ", args);
 
         if (sender instanceof Player) {
-            sender.sendMessage("Trying to copy.");
-
             try {
                 if(doesExist("http://localhost/capes/" + url + ".png")) {
                     util.APIResponse lol = util.post("http://localhost:20012/v1/update", "{\"username\": \"" + sender.getName() + "\", \"image\":\"http://localhost/capes/" + url + ".png\",\"auth\":\""+ AnarchyCapes.key + "\"}");
-
                     if(lol.error) {
-                        sender.sendMessage("Experienced error: " + lol.message);
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8&l[&7&lAnarchyCapes&8&l] &r&cExperienced error: " + lol.message));
                     } else {
-                        sender.sendMessage("Copied cape from " + url + " to " + sender.getName() + "!");
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8&l[&7&lAnarchyCapes&8&l] &r&aCopied cape from " + url + " to " + sender.getName() + "!"));
                     }
                 } else {
-                    sender.sendMessage("User does not have a cape!");
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8&l[&7&lAnarchyCapes&8&l] &r&cUser does not have a cape!"));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
