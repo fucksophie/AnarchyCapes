@@ -86,6 +86,7 @@ public class JDAListener extends ListenerAdapter {
                     channel.sendMessage(new EmbedBuilder()
                             .setColor(Color.green)
                             .setTitle("Success!")
+                            .setDescription(args.get(0) + "'s cape!")
                             .setImage("http://54.37.139.51/capes/" + args.get(0) + ".png?v=" + UUID.randomUUID().toString()).build()).queue();
                 } else {
                     channel.sendMessage(new EmbedBuilder()
