@@ -24,19 +24,26 @@ if not os.path.exists("capes"):
 async def update(request):
     if "auth" in request.json:
         if request.json["auth"] == key:
-            try:
-                response = requests.get(request.json["image"])
-        
-                urllib.request.urlretrieve(request.json["image"], "capes/" + request.json["username"]+".png")
-                print(f"{request.json['username']} - {Fore.BLUE}Cape sucessfully set.{Style.RESET_ALL}")
+            if request.json["image"].endswith(".png"):
+                try:
+                    response = requests.head(request.json["image"])
+            
+                    urllib.request.urlretrieve(request.json["image"], "capes/" + request.json["username"]+".png")
+                    print(f"{request.json['username']} - {Fore.BLUE}Cape sucessfully set.{Style.RESET_ALL}")
+                    return json({
+                        "message": "",
+                        "error": False
+                    })
+                except (requests.ConnectionError, urllib.error.HTTPError):
+                    print(f"{request.json['username']} - {Fore.BLUE}URL didn't exist.{Style.RESET_ALL}")
+                    return json({
+                        "message": "URL does not exist.",
+                        "error": True
+                    })
+            else:
+                print(f"{request.json['username']} - {Fore.BLUE}URL was not a image.{Style.RESET_ALL}")
                 return json({
-                    "message": "",
-                    "error": False
-                })
-            except requests.ConnectionError:
-                print(f"{request.json['username']} - {Fore.BLUE}URL didn't exist.{Style.RESET_ALL}")
-                return json({
-                    "message": "URL does not exist.",
+                    "message": "URL was not a image.",
                     "error": True
                 })
         else:

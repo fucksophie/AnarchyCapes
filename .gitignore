@@ -844,7 +844,7 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/python,java,windows,node,vs,eclipse,intellij+all,maven
 
 .vscode
-api/auth.txt
+auth.txt
 bot/token
 api/capes
-startscripts
+bot/token.txt
